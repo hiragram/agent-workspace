@@ -164,4 +164,4 @@ exec docker run -it --rm \
   -v "$(pwd):/workspace" \
   ${HOST_MOUNTS[@]+"${HOST_MOUNTS[@]}"} \
   "$IMAGE_NAME" \
-  claude "$@"
+  claude "$@" --allow-dangerously-skip-permissions
