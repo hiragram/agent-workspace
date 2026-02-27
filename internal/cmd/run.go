@@ -11,6 +11,7 @@ import (
 	"github.com/hiragram/claude-docker/internal/docker"
 	"github.com/hiragram/claude-docker/internal/image"
 	"github.com/hiragram/claude-docker/internal/mount"
+	"github.com/hiragram/claude-docker/internal/version"
 )
 
 const (
@@ -127,6 +128,11 @@ func (r *Runner) Execute(ctx context.Context, args []string) error {
 
 // Run is the top-level entry point. Returns an exit code.
 func Run(args []string) int {
+	if hasVersionFlag(args) {
+		fmt.Printf("claude-docker %s\n", version.Version)
+		return 0
+	}
+
 	runner, err := NewRunner()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error: %v\n", err)
@@ -139,4 +145,14 @@ func Run(args []string) int {
 	}
 
 	return 0
+}
+
+// hasVersionFlag checks if the args contain --version or -v.
+func hasVersionFlag(args []string) bool {
+	for _, a := range args {
+		if a == "--version" || a == "-v" {
+			return true
+		}
+	}
+	return false
 }

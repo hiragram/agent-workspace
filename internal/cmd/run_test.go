@@ -7,6 +7,7 @@ import (
 
 	"github.com/hiragram/claude-docker/internal/docker"
 	"github.com/hiragram/claude-docker/internal/mount"
+	"github.com/hiragram/claude-docker/internal/version"
 )
 
 // --- Mock Docker Client ---
@@ -288,5 +289,37 @@ func TestExecute_EnvVars(t *testing.T) {
 	rc := dc.runCalls[0]
 	if rc.EnvVars["HOST_WORKSPACE"] != "/home/testuser/project" {
 		t.Errorf("HOST_WORKSPACE = %q, want %q", rc.EnvVars["HOST_WORKSPACE"], "/home/testuser/project")
+	}
+}
+
+func TestHasVersionFlag(t *testing.T) {
+	tests := []struct {
+		name string
+		args []string
+		want bool
+	}{
+		{"--version flag", []string{"--version"}, true},
+		{"-v flag", []string{"-v"}, true},
+		{"--version among other args", []string{"-p", "hello", "--version"}, true},
+		{"-v among other args", []string{"-v", "-p", "hello"}, true},
+		{"no version flag", []string{"-p", "hello"}, false},
+		{"empty args", nil, false},
+		{"similar but not version", []string{"--verbose"}, false},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got := hasVersionFlag(tt.args)
+			if got != tt.want {
+				t.Errorf("hasVersionFlag(%v) = %v, want %v", tt.args, got, tt.want)
+			}
+		})
+	}
+}
+
+func TestVersionOutput(t *testing.T) {
+	// Verify version constant is accessible and non-empty
+	if version.Version == "" {
+		t.Error("version.Version should not be empty")
 	}
 }

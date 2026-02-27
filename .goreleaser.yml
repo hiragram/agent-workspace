@@ -1,5 +1,8 @@
 version: 2
 
+release:
+  mode: keep-existing
+
 builds:
   - binary: claude-docker
     goos:
