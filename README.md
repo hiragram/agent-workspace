@@ -4,13 +4,25 @@ Run [Claude Code](https://docs.anthropic.com/en/docs/claude-code) inside a Docke
 
 ## Install
 
+### Homebrew
+
+```bash
+brew install hiragram/tap/claude-docker
+```
+
+### Shell script
+
 ```bash
 curl -fsSL https://raw.githubusercontent.com/hiragram/claude-docker/main/install.sh | bash
 ```
 
-This installs the `claude-docker` command to `~/.local/bin/`.
+This downloads the binary to `~/.local/bin/`.
 
-To update, run the same command again.
+### From source
+
+```bash
+go install github.com/hiragram/claude-docker@latest
+```
 
 ## Usage
 
@@ -21,7 +33,6 @@ claude-docker
 All arguments are passed through to `claude`:
 
 ```bash
-claude-docker --dangerously-skip-permissions
 claude-docker -p "explain this codebase"
 ```
 
@@ -31,7 +42,7 @@ The current directory is mounted as the workspace inside the container.
 
 On first run, `claude-docker`:
 
-1. Builds a lightweight Docker image (Debian slim + git + curl)
+1. Builds a lightweight Docker image (Debian slim + git + curl + Node.js + gh)
 2. Installs Claude Code into a persistent Docker volume
 3. Prompts you to log in via OAuth (browser-based)
 
@@ -61,13 +72,29 @@ These are copied to `~/.claude-docker/` to avoid conflicts with the host-side Cl
 ## Uninstall
 
 ```bash
+# Remove binary (location depends on install method)
 rm ~/.local/bin/claude-docker
+# or: brew uninstall claude-docker
+
+# Remove data
 rm -rf ~/.claude-docker ~/.claude-docker.json
 docker rmi claude-code-docker
 docker volume rm claude-code-local
 ```
 
+## Development
+
+```bash
+# Run tests
+go test ./...
+
+# Build
+go build -o claude-docker .
+
+# Lint
+golangci-lint run
+```
+
 ## Requirements
 
 - Docker
-- bash
