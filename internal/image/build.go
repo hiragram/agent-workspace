@@ -15,7 +15,7 @@ func PrepareBuildContext() (dir string, cleanup func(), err error) {
 		return "", nil, fmt.Errorf("creating temp dir: %w", err)
 	}
 
-	cleanupFn := func() { os.RemoveAll(tmpDir) }
+	cleanupFn := func() { _ = os.RemoveAll(tmpDir) }
 
 	if err := os.WriteFile(filepath.Join(tmpDir, "Dockerfile"), dockerfile, 0644); err != nil {
 		cleanupFn()

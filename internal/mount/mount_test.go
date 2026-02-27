@@ -78,7 +78,9 @@ func TestBuildMounts_GitconfigWhenPresent(t *testing.T) {
 	workDir := t.TempDir()
 
 	// Create .gitconfig
-	os.WriteFile(filepath.Join(homeDir, ".gitconfig"), []byte("[user]\nname=test"), 0644)
+	if err := os.WriteFile(filepath.Join(homeDir, ".gitconfig"), []byte("[user]\nname=test"), 0644); err != nil {
+		t.Fatalf("writing .gitconfig: %v", err)
+	}
 
 	opts := newTestOpts(homeDir, workDir)
 	builder := NewBuilder()
@@ -116,7 +118,9 @@ func TestBuildMounts_GhConfigWhenPresent(t *testing.T) {
 	homeDir := t.TempDir()
 	workDir := t.TempDir()
 
-	os.MkdirAll(filepath.Join(homeDir, ".config", "gh"), 0755)
+	if err := os.MkdirAll(filepath.Join(homeDir, ".config", "gh"), 0755); err != nil {
+		t.Fatalf("creating .config/gh: %v", err)
+	}
 
 	opts := newTestOpts(homeDir, workDir)
 	builder := NewBuilder()
@@ -135,7 +139,9 @@ func TestBuildMounts_SSHReadOnly(t *testing.T) {
 	homeDir := t.TempDir()
 	workDir := t.TempDir()
 
-	os.MkdirAll(filepath.Join(homeDir, ".ssh"), 0700)
+	if err := os.MkdirAll(filepath.Join(homeDir, ".ssh"), 0700); err != nil {
+		t.Fatalf("creating .ssh: %v", err)
+	}
 
 	opts := newTestOpts(homeDir, workDir)
 	builder := NewBuilder()
@@ -178,13 +184,19 @@ func TestBuildMounts_WorktreeAddsMount(t *testing.T) {
 
 	mainRepo := filepath.Join(baseDir, "main-repo")
 	mainGitDir := filepath.Join(mainRepo, ".git")
-	os.MkdirAll(filepath.Join(mainGitDir, "worktrees", "wt"), 0755)
+	if err := os.MkdirAll(filepath.Join(mainGitDir, "worktrees", "wt"), 0755); err != nil {
+		t.Fatalf("creating worktree dir: %v", err)
+	}
 
 	worktreeDir := filepath.Join(baseDir, "worktree")
-	os.MkdirAll(worktreeDir, 0755)
+	if err := os.MkdirAll(worktreeDir, 0755); err != nil {
+		t.Fatalf("creating worktree dir: %v", err)
+	}
 
 	gitdirPath := filepath.Join(mainGitDir, "worktrees", "wt")
-	os.WriteFile(filepath.Join(worktreeDir, ".git"), []byte("gitdir: "+gitdirPath+"\n"), 0644)
+	if err := os.WriteFile(filepath.Join(worktreeDir, ".git"), []byte("gitdir: "+gitdirPath+"\n"), 0644); err != nil {
+		t.Fatalf("writing .git file: %v", err)
+	}
 
 	homeDir := t.TempDir()
 	opts := newTestOpts(homeDir, worktreeDir)
@@ -209,7 +221,9 @@ func TestBuildMounts_NoWorktreeMount_RegularRepo(t *testing.T) {
 	workDir := t.TempDir()
 
 	// Regular .git directory
-	os.MkdirAll(filepath.Join(workDir, ".git"), 0755)
+	if err := os.MkdirAll(filepath.Join(workDir, ".git"), 0755); err != nil {
+		t.Fatalf("creating .git dir: %v", err)
+	}
 
 	opts := newTestOpts(homeDir, workDir)
 	builder := NewBuilder()

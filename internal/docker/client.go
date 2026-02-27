@@ -60,7 +60,7 @@ func (c *ShellClient) CheckAvailable() error {
 	cmd.Stdout = nil
 	cmd.Stderr = nil
 	if err := cmd.Run(); err != nil {
-		return fmt.Errorf("Docker daemon is not running")
+		return fmt.Errorf("docker daemon is not running")
 	}
 	return nil
 }

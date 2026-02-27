@@ -1,3 +1,5 @@
+version: "2"
+
 linters:
   enable:
     - errcheck
@@ -5,7 +7,3 @@ linters:
     - staticcheck
     - unused
     - ineffassign
-    - gosimple
-
-issues:
-  exclude-use-default: true

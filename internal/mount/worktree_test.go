@@ -10,7 +10,9 @@ func TestDetectWorktree_RegularRepo(t *testing.T) {
 	workDir := t.TempDir()
 
 	// Create .git as a directory (regular repo)
-	os.MkdirAll(filepath.Join(workDir, ".git"), 0755)
+	if err := os.MkdirAll(filepath.Join(workDir, ".git"), 0755); err != nil {
+		t.Fatalf("creating .git dir: %v", err)
+	}
 
 	result, err := DetectWorktree(workDir)
 	if err != nil {
@@ -41,17 +43,21 @@ func TestDetectWorktree_WorktreeGitFile(t *testing.T) {
 
 	mainRepo := t.TempDir()
 	mainGitDir := filepath.Join(mainRepo, ".git")
-	os.MkdirAll(filepath.Join(mainGitDir, "worktrees", "my-worktree"), 0755)
+	if err := os.MkdirAll(filepath.Join(mainGitDir, "worktrees", "my-worktree"), 0755); err != nil {
+		t.Fatalf("creating worktree dir: %v", err)
+	}
 
 	worktreeDir := t.TempDir()
 	gitdirPath := filepath.Join(mainGitDir, "worktrees", "my-worktree")
 
 	// Write .git file with gitdir reference
-	os.WriteFile(
+	if err := os.WriteFile(
 		filepath.Join(worktreeDir, ".git"),
 		[]byte("gitdir: "+gitdirPath+"\n"),
 		0644,
-	)
+	); err != nil {
+		t.Fatalf("writing .git file: %v", err)
+	}
 
 	result, err := DetectWorktree(worktreeDir)
 	if err != nil {
@@ -69,18 +75,27 @@ func TestDetectWorktree_RelativeGitdir(t *testing.T) {
 	baseDir := t.TempDir()
 
 	mainGitDir := filepath.Join(baseDir, "main-repo", ".git")
-	os.MkdirAll(filepath.Join(mainGitDir, "worktrees", "wt"), 0755)
+	if err := os.MkdirAll(filepath.Join(mainGitDir, "worktrees", "wt"), 0755); err != nil {
+		t.Fatalf("creating worktree dir: %v", err)
+	}
 
 	worktreeDir := filepath.Join(baseDir, "worktree")
-	os.MkdirAll(worktreeDir, 0755)
+	if err := os.MkdirAll(worktreeDir, 0755); err != nil {
+		t.Fatalf("creating worktree dir: %v", err)
+	}
 
 	// Relative path from worktree to main .git/worktrees/wt
-	relPath, _ := filepath.Rel(worktreeDir, filepath.Join(mainGitDir, "worktrees", "wt"))
-	os.WriteFile(
+	relPath, err := filepath.Rel(worktreeDir, filepath.Join(mainGitDir, "worktrees", "wt"))
+	if err != nil {
+		t.Fatalf("computing relative path: %v", err)
+	}
+	if err := os.WriteFile(
 		filepath.Join(worktreeDir, ".git"),
 		[]byte("gitdir: "+relPath+"\n"),
 		0644,
-	)
+	); err != nil {
+		t.Fatalf("writing .git file: %v", err)
+	}
 
 	result, err := DetectWorktree(worktreeDir)
 	if err != nil {
@@ -97,7 +112,9 @@ func TestDetectWorktree_InvalidGitFile(t *testing.T) {
 	workDir := t.TempDir()
 
 	// Write .git file without gitdir: prefix
-	os.WriteFile(filepath.Join(workDir, ".git"), []byte("not a valid gitdir reference\n"), 0644)
+	if err := os.WriteFile(filepath.Join(workDir, ".git"), []byte("not a valid gitdir reference\n"), 0644); err != nil {
+		t.Fatalf("writing .git file: %v", err)
+	}
 
 	result, err := DetectWorktree(workDir)
 	if err != nil {
