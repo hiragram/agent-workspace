@@ -4,12 +4,6 @@ Run [Claude Code](https://docs.anthropic.com/en/docs/claude-code) inside a Docke
 
 ## Install
 
-### Homebrew
-
-```bash
-brew install hiragram/tap/claude-docker
-```
-
 ### Shell script
 
 ```bash
@@ -72,9 +66,8 @@ These are copied to `~/.claude-docker/` to avoid conflicts with the host-side Cl
 ## Uninstall
 
 ```bash
-# Remove binary (location depends on install method)
+# Remove binary
 rm ~/.local/bin/claude-docker
-# or: brew uninstall claude-docker
 
 # Remove data
 rm -rf ~/.claude-docker ~/.claude-docker.json
