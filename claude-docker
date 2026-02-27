@@ -83,7 +83,8 @@ ENTRYPOINT_EOF
 FROM debian:bookworm-slim
 
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends git curl ca-certificates wget openssh-client && \
+    apt-get install -y --no-install-recommends git curl ca-certificates wget openssh-client \
+      python3 python3-pip python3-venv && \
     rm -rf /var/lib/apt/lists/*
 
 RUN mkdir -p -m 755 /etc/apt/keyrings && \
@@ -95,6 +96,12 @@ RUN mkdir -p -m 755 /etc/apt/keyrings && \
     apt-get update && \
     apt-get install -y --no-install-recommends gh && \
     rm -rf /var/lib/apt/lists/*
+
+RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash - && \
+    apt-get install -y --no-install-recommends nodejs && \
+    rm -rf /var/lib/apt/lists/* && \
+    corepack enable && \
+    corepack prepare pnpm@latest --activate
 
 RUN useradd -m -s /bin/bash claude
 
