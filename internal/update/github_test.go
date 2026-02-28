@@ -21,11 +21,11 @@ func TestFetchLatestRelease(t *testing.T) {
 		"tag_name": "v0.2.0",
 		"assets": [
 			{
-				"name": "claude-docker_darwin_arm64.tar.gz",
+				"name": "aw_darwin_arm64.tar.gz",
 				"browser_download_url": "https://example.com/darwin_arm64.tar.gz"
 			},
 			{
-				"name": "claude-docker_linux_amd64.tar.gz",
+				"name": "aw_linux_amd64.tar.gz",
 				"browser_download_url": "https://example.com/linux_amd64.tar.gz"
 			}
 		]
@@ -81,8 +81,8 @@ func TestFetchLatestRelease_BadJSON(t *testing.T) {
 func TestFindAssetURL(t *testing.T) {
 	release := &ReleaseInfo{
 		Assets: []Asset{
-			{Name: "claude-docker_darwin_arm64.tar.gz", BrowserDownloadURL: "https://example.com/darwin_arm64.tar.gz"},
-			{Name: "claude-docker_linux_amd64.tar.gz", BrowserDownloadURL: "https://example.com/linux_amd64.tar.gz"},
+			{Name: "aw_darwin_arm64.tar.gz", BrowserDownloadURL: "https://example.com/darwin_arm64.tar.gz"},
+			{Name: "aw_linux_amd64.tar.gz", BrowserDownloadURL: "https://example.com/linux_amd64.tar.gz"},
 		},
 	}
 
@@ -98,7 +98,7 @@ func TestFindAssetURL(t *testing.T) {
 func TestFindAssetURL_NotFound(t *testing.T) {
 	release := &ReleaseInfo{
 		Assets: []Asset{
-			{Name: "claude-docker_linux_amd64.tar.gz", BrowserDownloadURL: "https://example.com/linux_amd64.tar.gz"},
+			{Name: "aw_linux_amd64.tar.gz", BrowserDownloadURL: "https://example.com/linux_amd64.tar.gz"},
 		},
 	}
 

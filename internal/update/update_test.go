@@ -13,7 +13,7 @@ import (
 	"testing"
 )
 
-// createTestArchive creates a tar.gz archive containing a single file named "claude-docker"
+// createTestArchive creates a tar.gz archive containing a single file named "aw"
 // with the given content.
 func createTestArchive(t *testing.T, content []byte) []byte {
 	t.Helper()
@@ -22,7 +22,7 @@ func createTestArchive(t *testing.T, content []byte) []byte {
 	tw := tar.NewWriter(gw)
 
 	if err := tw.WriteHeader(&tar.Header{
-		Name: "claude-docker",
+		Name: "aw",
 		Size: int64(len(content)),
 		Mode: 0755,
 	}); err != nil {
@@ -45,12 +45,12 @@ func TestExecute_NewVersionAvailable(t *testing.T) {
 	archive := createTestArchive(t, newBinary)
 
 	mux := http.NewServeMux()
-	mux.HandleFunc("/repos/hiragram/claude-docker/releases/latest", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("/repos/hiragram/agent-workspace/releases/latest", func(w http.ResponseWriter, r *http.Request) {
 		_, _ = fmt.Fprintf(w, `{
 			"tag_name": "v0.2.0",
 			"assets": [
 				{
-					"name": "claude-docker_testOS_testArch.tar.gz",
+					"name": "aw_testOS_testArch.tar.gz",
 					"browser_download_url": "%s/download/archive.tar.gz"
 				}
 			]
@@ -70,7 +70,7 @@ func TestExecute_NewVersionAvailable(t *testing.T) {
 
 	// Create a dummy binary to be replaced
 	tmpDir := t.TempDir()
-	targetPath := filepath.Join(tmpDir, "claude-docker")
+	targetPath := filepath.Join(tmpDir, "aw")
 	if err := os.WriteFile(targetPath, []byte("old-binary"), 0755); err != nil {
 		t.Fatalf("writing dummy binary: %v", err)
 	}
@@ -110,7 +110,7 @@ func TestExecute_NewVersionAvailable(t *testing.T) {
 
 func TestExecute_AlreadyUpToDate(t *testing.T) {
 	mux := http.NewServeMux()
-	mux.HandleFunc("/repos/hiragram/claude-docker/releases/latest", func(w http.ResponseWriter, _ *http.Request) {
+	mux.HandleFunc("/repos/hiragram/agent-workspace/releases/latest", func(w http.ResponseWriter, _ *http.Request) {
 		_, _ = fmt.Fprint(w, `{"tag_name": "v0.1.0", "assets": []}`)
 	})
 	server := httptest.NewServer(mux)
@@ -169,11 +169,11 @@ func TestExecute_NetworkError(t *testing.T) {
 
 func TestExecute_NoMatchingAsset(t *testing.T) {
 	mux := http.NewServeMux()
-	mux.HandleFunc("/repos/hiragram/claude-docker/releases/latest", func(w http.ResponseWriter, _ *http.Request) {
+	mux.HandleFunc("/repos/hiragram/agent-workspace/releases/latest", func(w http.ResponseWriter, _ *http.Request) {
 		_, _ = fmt.Fprint(w, `{
 			"tag_name": "v0.2.0",
 			"assets": [
-				{"name": "claude-docker_linux_amd64.tar.gz", "browser_download_url": "https://example.com/linux.tar.gz"}
+				{"name": "aw_linux_amd64.tar.gz", "browser_download_url": "https://example.com/linux.tar.gz"}
 			]
 		}`)
 	})

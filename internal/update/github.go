@@ -9,7 +9,7 @@ import (
 
 const (
 	repoOwner = "hiragram"
-	repoName  = "claude-docker"
+	repoName  = "agent-workspace"
 )
 
 // ReleaseInfo holds the relevant fields from a GitHub release.
@@ -60,7 +60,7 @@ func FetchLatestRelease(client HTTPClient) (*ReleaseInfo, error) {
 
 // FindAssetURL finds the download URL for the given OS/arch from the release assets.
 func FindAssetURL(release *ReleaseInfo, goos, goarch string) (string, error) {
-	expected := fmt.Sprintf("claude-docker_%s_%s.tar.gz", goos, goarch)
+	expected := fmt.Sprintf("aw_%s_%s.tar.gz", goos, goarch)
 	for _, a := range release.Assets {
 		if a.Name == expected {
 			return a.BrowserDownloadURL, nil

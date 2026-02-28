@@ -13,7 +13,7 @@ import (
 	"strings"
 )
 
-const binaryName = "claude-docker"
+const binaryName = "aw"
 
 // Updater holds dependencies for the update workflow.
 type Updater struct {
@@ -56,11 +56,11 @@ func (u *Updater) Execute() error {
 		return fmt.Errorf("comparing versions: %w", err)
 	}
 	if !newer {
-		_, _ = fmt.Fprintf(u.Stderr, "claude-docker %s is already the latest version.\n", u.CurrentVersion)
+		_, _ = fmt.Fprintf(u.Stderr, "aw %s is already the latest version.\n", u.CurrentVersion)
 		return nil
 	}
 
-	_, _ = fmt.Fprintf(u.Stderr, "Updating claude-docker: %s → %s\n", u.CurrentVersion, latestVersion)
+	_, _ = fmt.Fprintf(u.Stderr, "Updating aw: %s → %s\n", u.CurrentVersion, latestVersion)
 
 	// 3. Find asset URL
 	assetURL, err := FindAssetURL(release, u.GOOS, u.GOARCH)
@@ -92,7 +92,7 @@ func (u *Updater) Execute() error {
 		return fmt.Errorf("replacing binary: %w", err)
 	}
 
-	_, _ = fmt.Fprintln(u.Stderr, "Updated successfully! Run 'claude-docker --version' to verify.")
+	_, _ = fmt.Fprintln(u.Stderr, "Updated successfully! Run 'aw --version' to verify.")
 	return nil
 }
 
@@ -116,7 +116,7 @@ func (u *Updater) download(url string) ([]byte, error) {
 	return io.ReadAll(resp.Body)
 }
 
-// extractBinary extracts the binary named "claude-docker" from a tar.gz archive.
+// extractBinary extracts the binary named "aw" from a tar.gz archive.
 func extractBinary(archiveData []byte) ([]byte, error) {
 	gr, err := gzip.NewReader(bytes.NewReader(archiveData))
 	if err != nil {
