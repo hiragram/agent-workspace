@@ -1,9 +1,16 @@
 package profile
 
+// ConfigSource describes where the config was loaded from.
+type ConfigSource struct {
+	IsBuiltin bool   // true if the built-in default config was used
+	FilePath  string // non-empty if loaded from a file
+}
+
 // Config represents the top-level .agent-workspace.yml file.
 type Config struct {
 	Default  string             `yaml:"default"`
 	Profiles map[string]Profile `yaml:"profiles"`
+	Source   ConfigSource       `yaml:"-"`
 }
 
 // Profile describes a single named workspace profile.

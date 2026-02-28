@@ -28,6 +28,10 @@ func Run(args []string) int {
 		return 0
 	}
 
+	if len(args) > 0 && args[0] == "profiles" {
+		return runProfiles()
+	}
+
 	// Determine profile name
 	profileName := ""
 	if len(args) > 0 && !strings.HasPrefix(args[0], "-") {
@@ -121,6 +125,25 @@ func buildStages(p profile.Profile) []pipeline.Stage {
 	stages = append(stages, &stage.LaunchStage{})
 
 	return stages
+}
+
+func runProfiles() int {
+	cfg, err := profile.Load()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error loading config: %v\n", err)
+		return 1
+	}
+
+	// Show config source
+	if cfg.Source.IsBuiltin {
+		fmt.Println("Source: built-in default (no .agent-workspace.yml found)")
+	} else {
+		fmt.Printf("Source: %s\n", cfg.Source.FilePath)
+	}
+	fmt.Println()
+
+	printAvailableProfiles(cfg)
+	return 0
 }
 
 func printAvailableProfiles(cfg *profile.Config) {

@@ -31,6 +31,7 @@ func Load() (*Config, error) {
 	if err != nil {
 		// Not in a git repo — use built-in default
 		cfg := builtinConfig
+		cfg.Source = ConfigSource{IsBuiltin: true}
 		return &cfg, nil
 	}
 
@@ -45,12 +46,18 @@ func LoadFile(path string) (*Config, error) {
 	if err != nil {
 		if os.IsNotExist(err) {
 			cfg := builtinConfig
+			cfg.Source = ConfigSource{IsBuiltin: true}
 			return &cfg, nil
 		}
 		return nil, fmt.Errorf("reading config file: %w", err)
 	}
 
-	return Parse(data)
+	cfg, err := Parse(data)
+	if err != nil {
+		return nil, err
+	}
+	cfg.Source = ConfigSource{FilePath: path}
+	return cfg, nil
 }
 
 // Parse parses YAML bytes into a Config.
