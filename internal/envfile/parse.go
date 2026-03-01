@@ -62,7 +62,7 @@ func ParseFile(path string) (map[string]string, error) {
 		}
 		return nil, fmt.Errorf("opening env file: %w", err)
 	}
-	defer f.Close()
+	defer func() { _ = f.Close() }()
 
 	return Parse(f)
 }
