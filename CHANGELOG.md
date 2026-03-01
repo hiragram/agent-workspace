@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.7.0](https://github.com/hiragram/agent-workspace/compare/v0.6.0...v0.7.0) (2026-03-01)
+
+
+### Features
+
+* add custom environment variable passthrough to Docker containers ([b9e67b4](https://github.com/hiragram/agent-workspace/commit/b9e67b40f04b16af4e591cc4316e166dcd8817a9))
+
+
+### Bug Fixes
+
+* handle errcheck lint for file Close in envfile parser ([cf2863a](https://github.com/hiragram/agent-workspace/commit/cf2863a5549f3547c56d8787a6899704ab62f7b8))
+
 ## [0.6.0](https://github.com/hiragram/agent-workspace/compare/v0.5.0...v0.6.0) (2026-03-01)
 
 
