@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.7.1](https://github.com/hiragram/agent-workspace/compare/v0.7.0...v0.7.1) (2026-03-01)
+
+
+### Bug Fixes
+
+* pass profile env vars to child processes via .aw-profile-env ([9380e3d](https://github.com/hiragram/agent-workspace/commit/9380e3d9e3988d569fe74b28f43e8d5a27a33b1c))
+* pass profile env vars to child processes via .aw-profile-env ([a520685](https://github.com/hiragram/agent-workspace/commit/a52068584de02bb63a78054fd1ce20d9ad81f70a))
+
 ## [0.7.0](https://github.com/hiragram/agent-workspace/compare/v0.6.0...v0.7.0) (2026-03-01)
 
 
