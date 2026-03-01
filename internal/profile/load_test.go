@@ -173,6 +173,17 @@ profiles:
 	if cfg.Default != "my-profile" {
 		t.Errorf("Default = %q, want %q", cfg.Default, "my-profile")
 	}
+
+	// Builtin profiles should also be present after merge
+	if _, ok := cfg.Profiles["claude"]; !ok {
+		t.Error("builtin profile 'claude' should be preserved after merge")
+	}
+	if _, ok := cfg.Profiles["worktree-zellij"]; !ok {
+		t.Error("builtin profile 'worktree-zellij' should be preserved after merge")
+	}
+	if _, ok := cfg.Profiles["my-profile"]; !ok {
+		t.Error("user profile 'my-profile' should be present")
+	}
 }
 
 func TestParse_WorktreeOnCreate(t *testing.T) {
