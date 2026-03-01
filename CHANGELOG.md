@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.4.0](https://github.com/hiragram/agent-workspace/compare/v0.3.0...v0.4.0) (2026-03-01)
+
+
+### Features
+
+* add `aw profiles` subcommand ([1c4964d](https://github.com/hiragram/agent-workspace/commit/1c4964d1a66aaeaeb9f5a2152ea59530e2972640))
+* add `aw profiles` subcommand to list available profiles ([f7ac122](https://github.com/hiragram/agent-workspace/commit/f7ac122c28addbafabdd388720fb97a9ce7ed082))
+* rename docker-claude to claude and add worktree-zellij as default ([8c713cf](https://github.com/hiragram/agent-workspace/commit/8c713cf5a1dfc3c02673a195add47aaad2ff4d09))
+* rename docker-claude to claude and add worktree-zellij as default builtin ([c20b69a](https://github.com/hiragram/agent-workspace/commit/c20b69aadc7f915cd153e9a0c7422be472bda4e3))
+
 ## [0.3.0](https://github.com/hiragram/agent-workspace/compare/v0.2.0...v0.3.0) (2026-02-28)
 
 
