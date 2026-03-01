@@ -14,11 +14,17 @@ const configFileName = ".agent-workspace.yml"
 
 // builtinConfig is used when no config file is found.
 var builtinConfig = Config{
-	Default: "docker-claude",
+	Default: "worktree-zellij",
 	Profiles: map[string]Profile{
-		"docker-claude": {
+		"claude": {
 			Environment: EnvironmentDocker,
 			Launch:      LaunchClaude,
+		},
+		"worktree-zellij": {
+			Worktree:    &WorktreeConfig{},
+			Environment: EnvironmentDocker,
+			Launch:      LaunchZellij,
+			Zellij:      &ZellijConfig{Layout: "default"},
 		},
 	},
 }

@@ -31,10 +31,10 @@ profiles:
 ## Full example
 
 ```yaml
-default: docker-claude
+default: worktree-zellij
 
 profiles:
-  docker-claude:
+  claude:
     environment: docker
     launch: claude
 
@@ -167,12 +167,19 @@ The layout to use for the zellij session. Currently only `"default"` is supporte
 When no `.agent-workspace.yml` is found, `aw` behaves as if the following configuration were present:
 
 ```yaml
-default: docker-claude
+default: worktree-zellij
 
 profiles:
-  docker-claude:
+  claude:
     environment: docker
     launch: claude
+
+  worktree-zellij:
+    worktree: {}
+    environment: docker
+    launch: zellij
+    zellij:
+      layout: default
 ```
 
 ## Validation rules
@@ -235,6 +242,6 @@ These are copied to `~/.agent-workspace/` to avoid conflicts with the host-side 
 ## Tips
 
 - Use `aw profiles` to see all available profiles and which config file they were loaded from.
-- Profile names can be any valid YAML string. Keep them short and descriptive (e.g., `docker-claude`, `worktree-shell`).
+- Profile names can be any valid YAML string. Keep them short and descriptive (e.g., `claude`, `worktree-shell`).
 - You can commit `.agent-workspace.yml` to your repository so all contributors share the same workspace profiles.
 - If you need different profiles for different machines, use separate branches or a gitignored override (not currently supported, but the built-in default handles the no-config case gracefully).

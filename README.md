@@ -41,11 +41,11 @@ aw --version
 Create `.agent-workspace.yml` in your git repository root:
 
 ```yaml
-default: docker-claude
+default: worktree-zellij
 
 profiles:
   # Run Claude Code inside a Docker container
-  docker-claude:
+  claude:
     environment: docker
     launch: claude
 
@@ -77,7 +77,7 @@ profiles:
       layout: default
 ```
 
-If no `.agent-workspace.yml` is found, `aw` uses a built-in default that runs Claude Code in Docker (equivalent to `docker-claude` above).
+If no `.agent-workspace.yml` is found, `aw` uses a built-in default that creates a worktree and starts a zellij dev environment with Docker-based Claude (equivalent to `worktree-zellij` above).
 
 ### Profile options
 

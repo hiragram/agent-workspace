@@ -102,13 +102,13 @@ func (l *ZellijLauncher) prepareFiles(ec *pipeline.ExecutionContext) (string, fu
 func (l *ZellijLauncher) buildClaudeCommand(ec *pipeline.ExecutionContext) string {
 	switch ec.Profile.Environment {
 	case profile.EnvironmentDocker:
-		// Run aw with the docker-claude profile equivalent
+		// Run aw with the claude profile equivalent
 		// This will cause it to build docker image and run claude inside
 		self, err := os.Executable()
 		if err != nil {
 			self = "aw"
 		}
-		return fmt.Sprintf("%s docker-claude", self)
+		return fmt.Sprintf("%s claude", self)
 	default:
 		// Host mode: just run claude directly
 		return "claude"
