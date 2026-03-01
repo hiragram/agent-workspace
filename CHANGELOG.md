@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.5.0](https://github.com/hiragram/agent-workspace/compare/v0.4.0...v0.5.0) (2026-03-01)
+
+
+### Features
+
+* add on-create hook for worktree profiles ([0092cc6](https://github.com/hiragram/agent-workspace/commit/0092cc6c871a169033554fc33c0495653a60325d))
+* add on-create hook for worktree profiles ([3d7293e](https://github.com/hiragram/agent-workspace/commit/3d7293ebf912d7a644b93ad474596adecb3b0007))
+* install Go 1.23.6 in Docker container ([ba59007](https://github.com/hiragram/agent-workspace/commit/ba590071391ce7a88fbec789b7404a2d06128d83))
+* install Go 1.23.6 in Docker container ([4d01510](https://github.com/hiragram/agent-workspace/commit/4d01510deba918fdc52c5b1f59eaad63b3e1fd4c))
+* merge builtin profiles with user config ([94b57d4](https://github.com/hiragram/agent-workspace/commit/94b57d44de1ead4cfe1c60f15d07ea704c871c19))
+* merge builtin profiles with user config ([c97dfc7](https://github.com/hiragram/agent-workspace/commit/c97dfc7f3edcffa5e4878973638251ad82d0384e))
+
 ## [0.4.0](https://github.com/hiragram/agent-workspace/compare/v0.3.0...v0.4.0) (2026-03-01)
 
 
