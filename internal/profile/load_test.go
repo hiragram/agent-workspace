@@ -139,11 +139,14 @@ func TestLoadFile_NotFound(t *testing.T) {
 	}
 
 	// Should return builtin default
-	if cfg.Default != "docker-claude" {
-		t.Errorf("Default = %q, want %q", cfg.Default, "docker-claude")
+	if cfg.Default != "worktree-zellij" {
+		t.Errorf("Default = %q, want %q", cfg.Default, "worktree-zellij")
 	}
-	if _, ok := cfg.Profiles["docker-claude"]; !ok {
-		t.Error("expected docker-claude profile in builtin default")
+	if _, ok := cfg.Profiles["claude"]; !ok {
+		t.Error("expected claude profile in builtin default")
+	}
+	if _, ok := cfg.Profiles["worktree-zellij"]; !ok {
+		t.Error("expected worktree-zellij profile in builtin default")
 	}
 }
 
@@ -185,7 +188,7 @@ func TestLoad_NoGitRepo(t *testing.T) {
 		t.Fatalf("Load() should not error when not in git repo, got: %v", err)
 	}
 
-	if cfg.Default != "docker-claude" {
-		t.Errorf("Default = %q, want %q", cfg.Default, "docker-claude")
+	if cfg.Default != "worktree-zellij" {
+		t.Errorf("Default = %q, want %q", cfg.Default, "worktree-zellij")
 	}
 }
