@@ -175,6 +175,53 @@ profiles:
 	}
 }
 
+func TestParse_WorktreeOnCreate(t *testing.T) {
+	yaml := `
+profiles:
+  test:
+    worktree:
+      base: origin/main
+      on-create: "./scripts/setup.sh"
+    environment: host
+    launch: claude
+`
+	cfg, err := Parse([]byte(yaml))
+	if err != nil {
+		t.Fatalf("Parse() error: %v", err)
+	}
+
+	p := cfg.Profiles["test"]
+	if p.Worktree == nil {
+		t.Fatal("Worktree should not be nil")
+	}
+	if p.Worktree.OnCreate != "./scripts/setup.sh" {
+		t.Errorf("OnCreate = %q, want %q", p.Worktree.OnCreate, "./scripts/setup.sh")
+	}
+}
+
+func TestParse_WorktreeWithoutOnCreate(t *testing.T) {
+	yaml := `
+profiles:
+  test:
+    worktree:
+      base: origin/main
+    environment: host
+    launch: claude
+`
+	cfg, err := Parse([]byte(yaml))
+	if err != nil {
+		t.Fatalf("Parse() error: %v", err)
+	}
+
+	p := cfg.Profiles["test"]
+	if p.Worktree == nil {
+		t.Fatal("Worktree should not be nil")
+	}
+	if p.Worktree.OnCreate != "" {
+		t.Errorf("OnCreate should be empty, got %q", p.Worktree.OnCreate)
+	}
+}
+
 func TestLoad_NoGitRepo(t *testing.T) {
 	// Override findGitRoot to simulate not being in a git repo
 	orig := findGitRoot

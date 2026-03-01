@@ -23,7 +23,8 @@ type Profile struct {
 
 // WorktreeConfig controls git worktree creation.
 type WorktreeConfig struct {
-	Base string `yaml:"base,omitempty"` // default: "origin/main"
+	Base     string `yaml:"base,omitempty"`      // default: "origin/main"
+	OnCreate string `yaml:"on-create,omitempty"` // shell command to run after worktree creation
 }
 
 // EffectiveBase returns the base ref, defaulting to "origin/main" if empty.
